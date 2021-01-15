@@ -11,7 +11,7 @@
 #include "terminal.h"
 
 void editor_process_keypress() {
-    char c = editor_read_key();
+    long c = editor_read_key();
 
     switch (c) {
         // ctrl-q
@@ -19,26 +19,28 @@ void editor_process_keypress() {
             exit(EXIT_SUCCESS);
             break;
 
-        case 'h':
-        case 'D' | (char)0x80: // left arrow
+        case ARROW_LEFT:
             move_cursor(-1, 0);
             break;
-        case 'l':
-        case 'C' | (char)0x80: // right arrow
+        case ARROW_RIGHT:
             move_cursor(1, 0);
             break;
-        case 'k':
-        case 'A' | (char)0x80: // up arrow
+        case ARROW_UP:
             move_cursor(0, 1);
             break;
-        case 'j':
-        case 'B' | (char)0x80: // down arrow
+        case ARROW_DOWN:
             move_cursor(0, -1);
             break;
-        case '5' | (char)0x80: // page up
+        case HOME_KEY:
+            move_line(1);
+            break;
+        case END_KEY:
+            move_line(0);
+            break;
+        case PAGE_UP:
             move_page(1);
             break;
-        case '6' | (char)0x80: // page down
+        case PAGE_DOWN:
             move_page(0);
             break;
     }

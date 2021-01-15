@@ -24,8 +24,6 @@ void abuf_append(struct abuf *ab, char *data, size_t len) {
 
     memcpy(&ab->buf[ab->len], data, len);
     ab->len += len;
-
-    return 0;
 }
 
 void abuf_free(struct abuf *ab) {

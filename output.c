@@ -22,6 +22,13 @@ void init_output(struct terminal_details terminal_details) {
 int max(int a, int b) { return a > b ? a : b; }
 int min(int a, int b) { return a < b ? a : b; }
 
+void move_line(int begin) {
+    if (begin)
+        move_cursor(-1 * td.cols, 0);
+    else
+        move_cursor(td.cols, 0);
+}
+
 void move_page(int up) {
     if (up)
         move_cursor(0, td.rows);

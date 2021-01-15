@@ -11,7 +11,7 @@
 
 static struct termios original_termios;
 
-char editor_read_key() {
+long editor_read_key() {
     int nread;
     char c;
 
@@ -27,12 +27,34 @@ char editor_read_key() {
         read(STDIN_FILENO, &b, 1);
 
         if (a == '[') {
-            if (b >= '0' && b <= '1') {
+            if (b >= '0' && b <= '9') {
                 read(STDIN_FILENO, &c, 1);
-                if (c == '~')
-                    return b | 0x80;
+
+                if (c == '~') {
+                    switch (b) {
+                        case '1': return HOME_KEY;
+                        case '3': return DELETE_KEY;
+                        case '4': return END_KEY;
+                        case '5': return PAGE_UP;
+                        case '6': return PAGE_DOWN;
+                        case '7': return HOME_KEY;
+                        case '8': return END_KEY;
+                    }
+                }
             } else {
-                return b | 0x80;
+                switch (b) {
+                    case 'A': return ARROW_UP;
+                    case 'B': return ARROW_DOWN;
+                    case 'C': return ARROW_RIGHT;
+                    case 'D': return ARROW_LEFT;
+                    case 'H': return HOME_KEY;
+                    case 'F': return END_KEY;
+                }
+            }
+        } else if (a == 'O') {
+            switch (b) {
+                case 'H': return HOME_KEY;
+                case 'F': return END_KEY;
             }
         }
     }

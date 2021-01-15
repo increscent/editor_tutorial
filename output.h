@@ -14,5 +14,6 @@ void init_output(struct terminal_details td);
 void editor_refresh_screen();
 void move_cursor(int x_offset, int y_offset);
 void move_page(int up);
+void move_line(int begin);
 
 #endif
