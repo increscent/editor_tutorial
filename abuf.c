@@ -14,6 +14,9 @@ struct abuf abuf_init() {
     return ab;
 }
 
+/*
+ * Copies data into the buffer
+ */
 void abuf_append(struct abuf *ab, char *data, size_t len) {
     if (len + ab->len > ab->buf_size) {
         if ((ab->buf = realloc(ab->buf, (len + ab->len) * 2)) == NULL) {

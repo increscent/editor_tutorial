@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include "abuf.h"
+#include "file.h"
 #include "helper.h"
 #include "output.h"
 
@@ -41,11 +42,14 @@ void move_cursor(int x_offset, int y_offset) {
     cp.y = max(0, min(cp.y - y_offset, td.rows-1));
 }
 
-void editor_draw_rows(struct abuf *ab) {
+void editor_draw_rows(struct abuf *ab, struct file *f) {
     int y;
     for (y = 0; y < td.rows; y++) {
 
-        if (y == td.rows / 3) {
+        struct abuf *row;
+        if ((row = file_get_row(f, y)) != NULL) {
+            abuf_append(ab, row->buf, min(row->len, td.cols));
+        } else if (f->num_rows == 0 && y == td.rows / 3) {
             char welcome[80];
             int welcomelen = snprintf(welcome, sizeof(welcome),
                         "Kilo editor -- version %s", KILO_VERSION);
@@ -76,7 +80,7 @@ void editor_draw_rows(struct abuf *ab) {
     }
 }
 
-void editor_refresh_screen() {
+void editor_refresh_screen(struct file *f) {
     struct abuf ab = abuf_init();
 
     // hide cursor
@@ -84,7 +88,7 @@ void editor_refresh_screen() {
     // position cursor at (1, 1)
     abuf_append(&ab, "\x1b[H", 3);
 
-    editor_draw_rows(&ab);
+    editor_draw_rows(&ab, f);
 
     // move cursor
     char buf[32];

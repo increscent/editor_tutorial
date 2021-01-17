@@ -22,3 +22,19 @@ int safe(int val, const char *s) {
 
     return val;
 }
+
+void* safe_malloc(size_t size) {
+    void *ptr;
+
+    if ((ptr = malloc(size)) == NULL)
+        die("malloc");
+
+    return ptr;
+}
+
+void* safe_realloc(void *ptr, size_t size) {
+    if ((ptr = realloc(ptr, size)) == NULL)
+        die("realloc");
+
+    return ptr;
+}

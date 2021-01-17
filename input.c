@@ -5,12 +5,13 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "file.h"
 #include "helper.h"
 #include "input.h"
 #include "output.h"
 #include "terminal.h"
 
-void editor_process_keypress() {
+void editor_process_keypress(struct file *f) {
     long c = editor_read_key();
 
     switch (c) {
