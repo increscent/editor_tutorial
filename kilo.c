@@ -1,5 +1,5 @@
 // DONATE WHEN I'M DONE
-// https://viewsourcecode.org/snaptoken/kilo/04.aTextViewer.html
+// https://viewsourcecode.org/snaptoken/kilo/04.aTextViewer.html#vertical-scrolling
 
 #include <ctype.h>
 #include <errno.h>
